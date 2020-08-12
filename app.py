@@ -3,40 +3,30 @@ from __future__ import division, print_function
 
 import os
 import numpy as np
-
-
-from tensorflow.keras.applications.imagenet_utils import preprocess_input, decode_predictions
+import tensorflow
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
 # Flask utils
 from flask import Flask, redirect, url_for, request, render_template, flash, send_from_directory
-from werkzeug.utils import secure_filename
-
 
 # Define a flask app
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
-MODEL_PATH ='model.h5'
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = 'uploads/'
 
-# Load your trained model
-model = load_model(MODEL_PATH)
 
-UPLOAD_FOLDER = 'uploads'
-
-def model_predict(img_path, model):
-    img = image.load_img(img_path, target_size=(150, 150))
+def model_predict(img_path):
+    img = image.load_img(img_path, target_size=(150, 150, 3))
 
     x = image.img_to_array(img)
-
-
-    x = x / 255
+    x = x * 1./ 255
     x = np.expand_dims(x, axis=0)
 
-    x = preprocess_input(x)
-
+    model = load_model('model.h5')
     pred = model.predict(x)
     preds = np.argmax(pred, axis=1)
     if preds == 0:
@@ -54,29 +44,38 @@ def model_predict(img_path, model):
 
     return preds
 
+
 @app.route('/')
 def base():
     return render_template("home.html")
 
 
-@app.route('/predict', methods=['GET', 'POST'])
-def upload_file():
-
-    if request.method == 'POST':
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'GET':
         return render_template('model.html')
     else:
-        try:
-            file = request.files['file']
 
-            file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-            file.save(file_path)
+        target = os.path.join(APP_ROOT, 'uploads/')
+        print(target)
 
-            preds = model_predict(file_path, model)
+        if not os.path.isdir(target):
+            os.mkdir(target)
 
-            return render_template('result.html')
-        except:
-            flash("Please select the image first !!")
-            return redirect(url_for("model"))
+        file = request.files['file']
+        print(file)
+
+        filename = file.filename
+        destination = "/".join([target, filename])
+        print(destination)
+
+        file.save(destination)
+
+        preds = model_predict(destination)
+        print(preds)
+        print(type(model))
+        print("before done")
+        return render_template('output.html', image_file_name=filename, label=preds)
 
 
 @app.route('/uploads/<filename>')
