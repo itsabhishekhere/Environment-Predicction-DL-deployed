@@ -5,3 +5,6 @@
 
 
 • Please do ⭐ the repository, if it helped you in anyway.
+
+Due yo the upload limit of github I have not uploaded model.h5
+Will soon share a link of drive for the same, peace
