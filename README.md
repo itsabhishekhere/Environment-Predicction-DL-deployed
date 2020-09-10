@@ -3,6 +3,8 @@
 
 • This repository consists of files required to deploy a ___Computer Vision Web App___ created with ___Flask___ .
 
+ Model .h5 file link: ![model.h5](https://drive.google.com/file/d/16F4ljKk0kb5-XYhBtkGefTZNyjAqRKHD/view?usp=sharing)
+
 
 • Please do ⭐ the repository, if it helped you in anyway.
 
