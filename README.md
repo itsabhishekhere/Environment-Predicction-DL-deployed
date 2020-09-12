@@ -6,11 +6,12 @@
  Model .h5 file link: [model.h5](https://drive.google.com/file/d/16F4ljKk0kb5-XYhBtkGefTZNyjAqRKHD/view?usp=sharing)
  
  The model detect image background environment between different categories. They consists of:
- 1) Forest
- 2) Glacier
- 3) Mountains
- 4) Street
-
+Buildings
+Forest
+Glacier
+Mountain
+Sea
+Street
 
 • Please do ⭐ the repository, if it helped you in anyway.
 
