@@ -13,7 +13,7 @@
  5) Sea
  6) Street
  
-• To Run
+• To Run over local: 'python app.py'
 
 • Please do ⭐ the repository, if it helped you in anyway.
 
