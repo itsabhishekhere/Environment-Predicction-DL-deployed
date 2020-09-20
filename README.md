@@ -12,6 +12,8 @@
  4) Mountain
  5) Sea
  6) Street
+ 
+• To Run
 
 • Please do ⭐ the repository, if it helped you in anyway.
 
